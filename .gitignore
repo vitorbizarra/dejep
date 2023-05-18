@@ -1,0 +1,36 @@
+# Arquivos compilados
+target/
+
+# Arquivos de configuração do NetBeans
+nbproject/private/
+
+# Logs do NetBeans
+nb-configuration.xml
+
+# Arquivos de backup
+*~
+
+# Arquivos de configuração do Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Arquivos de log
+*.log
+
+# Arquivos de construção
+build/
+build.xml
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+
+# Arquivos específicos do editor NetBeans
+*.class
+*.jar
+**/src/main/java/**/nb-configuration.xml
+**/src/test/java/**/nb-configuration.xml
