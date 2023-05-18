@@ -34,3 +34,6 @@ nbactions.xml
 *.jar
 **/src/main/java/**/nb-configuration.xml
 **/src/test/java/**/nb-configuration.xml
+
+# Configuração de credenciais do bano
+**/src/main/resources/META-INF/persistence.xml
