@@ -35,8 +35,6 @@ public class UI_loading extends javax.swing.JFrame {
         contador.setForeground(new java.awt.Color(255, 255, 0));
         contador.setText("%");
         jPanel1.add(contador, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 460, -1, -1));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Djep_AdobeExpress.gif"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 590, 400));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 540));

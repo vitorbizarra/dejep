@@ -64,18 +64,6 @@ public class UI_login extends javax.swing.JFrame {
             }
         });
 
-        campo_senha1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_senha1ActionPerformed(evt);
-            }
-        });
-
-        campo_usuario1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_usuario1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout LoginLayout = new javax.swing.GroupLayout(Login);
         Login.setLayout(LoginLayout);
         LoginLayout.setHorizontalGroup(
@@ -159,24 +147,16 @@ public class UI_login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog (null, " Seu acesso foi permitido :) "
                 + "seja bem vindo ao Dejeo");
 
-            UI_sorteio = new UI_sorteio
-            Sorteio.setVisible(true);
+            // UI_sorteio = new UI_sorteio
+            // Sorteio.setVisible(true);
 
             dispose();
 
         }else{
             JOptionPane.showMessageDialog (null, " Seu acesso foi negado...");
         }
-    }
+    
     }//GEN-LAST:event_btn_entrarActionPerformed
-
-    private void campo_senha1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_senha1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campo_senha1ActionPerformed
-
-    private void campo_usuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_usuario1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campo_usuario1ActionPerformed
 
     /**
      * @param args the command line arguments

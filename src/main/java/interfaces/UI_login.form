@@ -128,14 +128,8 @@
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="campo_senha1">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campo_senha1ActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="campo_usuario1">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campo_usuario1ActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
