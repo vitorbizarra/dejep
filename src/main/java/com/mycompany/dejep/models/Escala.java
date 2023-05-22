@@ -4,6 +4,7 @@
  */
 package com.mycompany.dejep.models;
 
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,29 +15,36 @@ import javax.persistence.Table;
  * @author titib
  */
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "escalas")
+public class Escala {
 
     @Id
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "mes")
+    private Integer mes;
+
+    @Column(name = "ano")
+    private Integer ano;
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getMes() {
+        return mes;
     }
 
-    public String getName() {
-        return name;
+    public void setMes(Integer mes) {
+        this.mes = mes;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Integer getAno() {
+        return ano;
+    }
+
+    public void setAno(Integer ano) {
+        this.ano = ano;
     }
 }

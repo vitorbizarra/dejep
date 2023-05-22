@@ -1,0 +1,60 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.dejep.models;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author titib
+ */
+@Entity
+@Table(name = "books")
+public class Ferias {
+
+    @Id
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "id_funcionario")
+    private Funcionario funcionario;
+
+    @Column(name = "data_inicio")
+    private String data_inicio;
+
+    @Column(name = "data_terminal")
+    private String data_termino;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+
+    public String getData_inicio() {
+        return data_inicio;
+    }
+
+    public void setData_inicio(String data_inicio) {
+        this.data_inicio = data_inicio;
+    }
+
+    public String getData_termino() {
+        return data_termino;
+    }
+
+    public void setData_termino(String data_termino) {
+        this.data_termino = data_termino;
+    }
+}

@@ -4,7 +4,6 @@
  */
 package com.mycompany.dejep;
 
-import com.mycompany.dejep.models.Book;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -20,10 +19,6 @@ public class Dejep {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Dejep-PU");
         EntityManager entityManager = emf.createEntityManager();
-
-        Book book = entityManager.find(Book.class, 1);
-
-        System.out.println("\n" + book.getName() + "\n");
 
         entityManager.close();
         emf.close();
