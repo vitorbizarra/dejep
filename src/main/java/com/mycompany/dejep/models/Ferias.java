@@ -7,6 +7,7 @@ package com.mycompany.dejep.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -14,14 +15,14 @@ import javax.persistence.Table;
  * @author titib
  */
 @Entity
-@Table(name = "books")
+@Table(name = "ferias")
 public class Ferias {
 
     @Id
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_funcionario")
+    @ManyToOne
     private Funcionario funcionario;
 
     @Column(name = "data_inicio")

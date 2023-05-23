@@ -4,10 +4,12 @@
  */
 package com.mycompany.dejep.models;
 
-import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +30,9 @@ public class Escala {
     @Column(name = "ano")
     private Integer ano;
 
+    @OneToMany(mappedBy = "diarias", cascade = CascadeType.ALL)
+    private List<Diaria> diarias;
+
     public Integer getId() {
         return id;
     }
@@ -46,5 +51,19 @@ public class Escala {
 
     public void setAno(Integer ano) {
         this.ano = ano;
+    }
+
+    public void adicionarDiaria(Diaria diaria) {
+        diaria.setEscala(this);
+        this.diarias.add(diaria);
+    }
+
+    public void removerDiaria(Diaria diaria) {
+        diaria.setEscala(null);
+        this.diarias.remove(diaria);
+    }
+
+    public List<Diaria> getDiarias() {
+        return this.diarias;
     }
 }

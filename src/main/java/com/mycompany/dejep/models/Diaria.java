@@ -4,9 +4,11 @@
  */
 package com.mycompany.dejep.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -21,10 +23,10 @@ public class Diaria {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_escala")
+    @OneToOne(cascade = CascadeType.ALL)
     private Escala escala;
 
-    @Column(name = "id_funcionario")
+    @Column(name = "funcionario_id")
     private Funcionario functionario;
 
     @Column(name = "data")

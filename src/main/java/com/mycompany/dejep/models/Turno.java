@@ -4,9 +4,12 @@
  */
 package com.mycompany.dejep.models;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,8 +24,11 @@ public class Turno {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id")
+    @Column(name = "nome")
     private String nome;
+
+    @OneToMany(mappedBy = "turno", cascade = CascadeType.ALL)
+    private List<Funcionario> funcionarios;
 
     public Integer getId() {
         return id;
@@ -34,5 +40,19 @@ public class Turno {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void adicionarFuncionario(Funcionario funcionario) {
+        funcionario.setTurno(this);
+        this.funcionarios.add(funcionario);
+    }
+
+    public void removerFuncionario(Funcionario functionario) {
+        functionario.setTurno(null);
+        this.funcionarios.remove(functionario);
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return this.funcionarios;
     }
 }
