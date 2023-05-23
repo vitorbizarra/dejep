@@ -1,4 +1,4 @@
-package interfaces;
+package views;
 
 import javax.swing.JOptionPane;
 
