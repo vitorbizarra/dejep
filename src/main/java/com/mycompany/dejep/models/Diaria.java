@@ -8,7 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -23,10 +23,10 @@ public class Diaria {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Escala escala;
 
-    @Column(name = "funcionario_id")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Funcionario functionario;
 
     @Column(name = "data")

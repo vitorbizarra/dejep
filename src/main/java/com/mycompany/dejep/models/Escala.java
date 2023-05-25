@@ -30,7 +30,7 @@ public class Escala {
     @Column(name = "ano")
     private Integer ano;
 
-    @OneToMany(mappedBy = "diarias", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Diaria> diarias;
 
     public Integer getId() {
