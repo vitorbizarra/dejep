@@ -5,11 +5,10 @@
 package views;
 
 import com.mycompany.dejep.models.Turno;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import com.mycompany.dejep.models.utils.EntityUtils;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -140,24 +139,22 @@ public class Inicio extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(turno_id_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(turno_nome_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_add_turno)
                         .addComponent(jButton2)
                         .addComponent(jButton3))
-                    .addComponent(jLabel1))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(turno_id_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(turno_nome_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         turnos_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "ID", "Nome"
@@ -216,21 +213,17 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "O campo \"nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
         }
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Dejep-PU");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-
-        transaction.begin();
-
         Turno turno = new Turno();
         turno.setNome(turno_nome_txt.getText());
 
-        em.persist(turno);
+        try {
+            EntityUtils.insert(turno);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Houve um erro ao tentar adicionar um novo turno.", "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
 
-        transaction.commit();
-
-        em.close();
-        emf.close();
+        JOptionPane.showMessageDialog(this, "Turno adicionado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+        this.refreshTurnosTable();
     }//GEN-LAST:event_btn_add_turnoActionPerformed
 
     /**
@@ -263,9 +256,22 @@ public class Inicio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inicio().setVisible(true);
+                Inicio inicio = new Inicio();
+                inicio.refreshTurnosTable();
+                inicio.setVisible(true);
             }
         });
+    }
+
+    public void refreshTurnosTable() {
+        DefaultTableModel model = (DefaultTableModel) turnos_table.getModel();
+        model.setRowCount(0);
+
+        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
+
+        for (Turno turno : turnos) {
+            model.addRow(new Object[]{turno.getId(), turno.getNome()});
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
