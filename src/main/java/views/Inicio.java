@@ -39,8 +39,8 @@ public class Inicio extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btn_add_turno = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_edit_turnos = new javax.swing.JButton();
+        btn_delete_turno = new javax.swing.JButton();
         turno_id_cbx = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         turno_nome_txt = new javax.swing.JTextField();
@@ -106,9 +106,25 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Atualizar");
+        btn_edit_turnos.setText("Atualizar");
+        btn_edit_turnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit_turnosActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Deletar");
+        btn_delete_turno.setText("Deletar");
+        btn_delete_turno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_delete_turnoActionPerformed(evt);
+            }
+        });
+
+        turno_id_cbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turno_id_cbxActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("ID:");
 
@@ -126,13 +142,13 @@ public class Inicio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(turno_nome_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(turno_nome_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_add_turno)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btn_edit_turnos)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btn_delete_turno)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -141,14 +157,14 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_add_turno)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3))
+                        .addComponent(btn_delete_turno)
+                        .addComponent(btn_edit_turnos))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(turno_id_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
                         .addComponent(turno_nome_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1)
+                        .addComponent(btn_add_turno)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -211,6 +227,7 @@ public class Inicio extends javax.swing.JFrame {
     private void btn_add_turnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_turnoActionPerformed
         if (turno_nome_txt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "O campo \"nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
         Turno turno = new Turno();
@@ -223,8 +240,86 @@ public class Inicio extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(this, "Turno adicionado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
-        this.refreshTurnosTable();
+
+        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
+        this.setTurnosComboBoxData(turnos);
+        this.setTurnosTableData(turnos);
     }//GEN-LAST:event_btn_add_turnoActionPerformed
+
+    private void btn_edit_turnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_turnosActionPerformed
+        if (turno_nome_txt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O campo \"nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int turno_id = Integer.parseInt(turno_id_cbx.getSelectedItem().toString());
+
+        String novo_nome = turno_nome_txt.getText();
+
+        Turno turno = EntityUtils.find(Turno.class, turno_id);
+
+        if (novo_nome.equals(turno.getNome())) {
+            JOptionPane.showMessageDialog(this, "O nome do registro já é esse!", "Ok", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        turno.setNome(novo_nome);
+
+        try {
+            EntityUtils.update(turno);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Houve um erro ao tentar editar o turno: " + turno.getNome(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(this, "Turno atualizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
+        this.setTurnosTableData(turnos);
+    }//GEN-LAST:event_btn_edit_turnosActionPerformed
+
+    private void turno_id_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turno_id_cbxActionPerformed
+        try {
+            int turno_id = Integer.parseInt(turno_id_cbx.getSelectedItem().toString());
+
+            Turno turno = EntityUtils.find(Turno.class, turno_id);
+
+            turno_nome_txt.setText(turno.getNome());
+        } catch (Exception e) {
+            turno_nome_txt.setText("");
+        }
+    }//GEN-LAST:event_turno_id_cbxActionPerformed
+
+    private void btn_delete_turnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_turnoActionPerformed
+        int res = JOptionPane.showOptionDialog(null,
+                "Você tem certeza que deseja excluir o turno: " + turno_nome_txt.getText() + "?",
+                "Excluir Turno",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                new String[]{"Sim", "Não"},
+                "Não");
+
+        if (res == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        int turno_id = Integer.parseInt(turno_id_cbx.getSelectedItem().toString());
+
+        Turno turno = EntityUtils.find(Turno.class, turno_id);
+
+        try {
+            EntityUtils.delete(turno);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, "Houve um erro ao tentar deletar o turno: " + turno.getNome(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(this, "Turno removido com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
+        this.setTurnosComboBoxData(turnos);
+        this.setTurnosTableData(turnos);
+    }//GEN-LAST:event_btn_delete_turnoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,27 +352,37 @@ public class Inicio extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Inicio inicio = new Inicio();
-                inicio.refreshTurnosTable();
+
+                List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
+                inicio.setTurnosTableData(turnos);
+                inicio.setTurnosComboBoxData(turnos);
+
                 inicio.setVisible(true);
             }
         });
     }
 
-    public void refreshTurnosTable() {
+    public void setTurnosTableData(List<Turno> turnos) {
         DefaultTableModel model = (DefaultTableModel) turnos_table.getModel();
         model.setRowCount(0);
-
-        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
 
         for (Turno turno : turnos) {
             model.addRow(new Object[]{turno.getId(), turno.getNome()});
         }
     }
 
+    public void setTurnosComboBoxData(List<Turno> turnos) {
+        turno_id_cbx.removeAllItems();
+
+        for (Turno turno : turnos) {
+            turno_id_cbx.addItem(turno.getId().toString());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add_turno;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btn_delete_turno;
+    private javax.swing.JButton btn_edit_turnos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

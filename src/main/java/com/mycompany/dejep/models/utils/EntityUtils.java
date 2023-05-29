@@ -29,7 +29,7 @@ public class EntityUtils {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        em.remove(entity);
+        em.remove(em.contains(entity) ? entity : em.merge(entity));
         em.getTransaction().commit();
     }
 
@@ -37,5 +37,10 @@ public class EntityUtils {
         EntityManager em = emf.createEntityManager();
 
         return em.createQuery(query, entityClass).getResultList();
+    }
+
+    public static <T> T find(Class<T> entityClass, int identifier) {
+        EntityManager em = emf.createEntityManager();
+        return em.find(entityClass, identifier);
     }
 }
