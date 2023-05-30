@@ -4,6 +4,7 @@
  */
 package com.mycompany.dejep.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,11 +35,13 @@ public class Turno {
     private List<Funcionario> funcionarios;
 
     public Turno() {
+        this.funcionarios = new ArrayList<>();
     }
 
     public Turno(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
+        this.funcionarios = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -65,5 +68,10 @@ public class Turno {
 
     public List<Funcionario> getFuncionarios() {
         return this.funcionarios;
+    }
+
+    @Override
+    public String toString() {
+        return this.nome;
     }
 }
