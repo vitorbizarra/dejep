@@ -1,15 +1,17 @@
 package com.mycompany.dejep.models.utils;
 
+import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
+import javax.persistence.PersistenceException;
 
 public class EntityUtils {
 
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("Dejep-PU");
 
-    public static void insert(Object entity) {
+    public static void insert(Object entity) throws PersistenceException, SQLException, Exception {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
