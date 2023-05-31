@@ -7,6 +7,7 @@ package com.mycompany.dejep.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,12 +24,13 @@ public class Ferias {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
 
     @Column(name = "data_inicio")
     private String data_inicio;
 
-    @Column(name = "data_terminal")
+    @Column(name = "data_termino")
     private String data_termino;
 
     public Integer getId() {
