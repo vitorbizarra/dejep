@@ -149,8 +149,8 @@ public class Inicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(funcionario_turno_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(funcionario_turno_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_add_funcionario)
                         .addGap(18, 18, 18)
                         .addComponent(btn_edit_funcionario)
@@ -503,7 +503,47 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_add_funcionarioActionPerformed
 
     private void btn_edit_funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_funcionarioActionPerformed
-        // TODO add your handling code here:
+        if (funcionario_nome_txt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O campo \"Nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (funcionario_rg_txt.getValue() == null) {
+            JOptionPane.showMessageDialog(this, "O campo \"RG\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String novo_nome = funcionario_nome_txt.getText();
+        String novo_rg = funcionario_rg_txt.getText();
+        Object item = funcionario_turno_cbx.getSelectedItem();
+        Integer turno_id = Integer.parseInt(((ComboItem) item).getValue());
+
+        int funcionario_id = Integer.parseInt(funcionario_id_cbx.getSelectedItem().toString());
+        Funcionario funcionario = EntityUtils.find(Funcionario.class, funcionario_id);
+
+        if (novo_nome.equals(funcionario.getNome()) && novo_rg.equals(funcionario.getRg()) && turno_id == funcionario.getTurno().getId()) {
+            JOptionPane.showMessageDialog(this, "O registro já está atualizado!", "Ok", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        Turno novo_turno = EntityUtils.find(Turno.class, turno_id);
+
+        funcionario.setNome(novo_nome);
+        funcionario.setRg(novo_rg);
+        funcionario.setTurno(novo_turno);
+
+        try {
+            EntityUtils.update(funcionario);
+        } catch (Exception e) { //TODO: Tratamento de duplicate entry
+            JOptionPane.showMessageDialog(this, "Houve um erro ao tentar editar o funcionario: " + funcionario.getNome(), "Erro!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        List<Funcionario> funcionarios = EntityUtils.select("SELECT f FROM Funcionario f ORDER BY nome ASC", Funcionario.class);
+        this.setFuncionariosTableData(funcionarios);
+
+        JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_btn_edit_funcionarioActionPerformed
 
     private void btn_delete_funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_funcionarioActionPerformed
@@ -517,7 +557,7 @@ public class Inicio extends javax.swing.JFrame {
             Funcionario funcionario = EntityUtils.find(Funcionario.class, funcionario_id);
 
             funcionario_nome_txt.setText(funcionario.getNome());
-            funcionario_rg_txt.setText(funcionario.getRg());
+            funcionario_rg_txt.setValue(funcionario.getRg());
             funcionario_turno_cbx.getModel().setSelectedItem(new ComboItem(funcionario.getTurno().getNome(), funcionario.getTurno().getId().toString()));
         } catch (Exception e) {
             funcionario_nome_txt.setText("");
