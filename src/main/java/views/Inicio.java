@@ -384,9 +384,7 @@ public class Inicio extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Turno adicionado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
 
-        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
-        this.setTurnosIdComboBoxData(turnos);
-        this.setTurnosTableData(turnos);
+        this.updateTurnosComponentsData();
     }//GEN-LAST:event_btn_add_turnoActionPerformed
 
     private void btn_edit_turnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_turnosActionPerformed
@@ -416,8 +414,7 @@ public class Inicio extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Turno atualizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
 
-        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
-        this.setTurnosTableData(turnos);
+        this.updateTurnosComponentsData();
     }//GEN-LAST:event_btn_edit_turnosActionPerformed
 
     private void turno_id_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turno_id_cbxActionPerformed
@@ -460,9 +457,7 @@ public class Inicio extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Turno removido com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
 
-        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
-        this.setTurnosIdComboBoxData(turnos);
-        this.setTurnosTableData(turnos);
+        this.updateTurnosComponentsData();
     }//GEN-LAST:event_btn_delete_turnoActionPerformed
 
     private void btn_add_funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_funcionarioActionPerformed
@@ -496,8 +491,7 @@ public class Inicio extends javax.swing.JFrame {
             return;
         }
 
-        List<Funcionario> funcionarios = EntityUtils.select("SELECT f FROM Funcionario f ORDER BY nome ASC", Funcionario.class);
-        this.setFuncionariosTableData(funcionarios);
+        this.updateFuncionariosComponentsData();
 
         JOptionPane.showMessageDialog(this, "Funcionário adicionado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btn_add_funcionarioActionPerformed
@@ -539,8 +533,7 @@ public class Inicio extends javax.swing.JFrame {
             return;
         }
 
-        List<Funcionario> funcionarios = EntityUtils.select("SELECT f FROM Funcionario f ORDER BY nome ASC", Funcionario.class);
-        this.setFuncionariosTableData(funcionarios);
+        this.updateFuncionariosComponentsData();
 
         JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
 
@@ -555,6 +548,7 @@ public class Inicio extends javax.swing.JFrame {
                 null,
                 new String[]{"Sim", "Não"},
                 "Não");
+
         if (btt != JOptionPane.YES_OPTION) {
             return;
         }
@@ -572,9 +566,7 @@ public class Inicio extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Funcionário deletado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
 
-        List<Funcionario> funcionarios = EntityUtils.select("SELECT t FROM Funcionario t ORDER BY id ASC", Funcionario.class);
-        this.setFuncionarioIdCbxData(funcionarios);
-        this.setFuncionariosTableData(funcionarios);
+        this.updateFuncionariosComponentsData();
     }//GEN-LAST:event_btn_delete_funcionarioActionPerformed
 
     private void funcionario_id_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionario_id_cbxActionPerformed
@@ -624,58 +616,40 @@ public class Inicio extends javax.swing.JFrame {
             public void run() {
                 Inicio inicio = new Inicio();
 
-                List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY nome ASC", Turno.class);
-                inicio.setTurnosTableData(turnos);
-                inicio.setTurnosIdComboBoxData(turnos);
-                inicio.setFuncionarioTurnoCbxData(turnos);
-
-                List<Funcionario> funcionarios = EntityUtils.select("SELECT f FROM Funcionario f ORDER BY id ASC", Funcionario.class);
-                inicio.setFuncionariosTableData(funcionarios);
-                inicio.setFuncionarioIdCbxData(funcionarios);
+                inicio.updateTurnosComponentsData();
+                inicio.updateFuncionariosComponentsData();
 
                 inicio.setVisible(true);
             }
         });
     }
 
-    public void setTurnosTableData(List<Turno> turnos) {
+    public void updateTurnosComponentsData() {
+        funcionario_turno_cbx.removeAllItems();
+        
+        turno_id_cbx.removeAllItems();
+        
         DefaultTableModel model = (DefaultTableModel) turnos_table.getModel();
         model.setRowCount(0);
+        
+        List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
 
         for (Turno turno : turnos) {
+            funcionario_turno_cbx.addItem(new ComboItem(turno.getNome(), turno.getId().toString()));
+            turno_id_cbx.addItem(turno.getId().toString());
             model.addRow(new Object[]{turno.getId(), turno.getNome()});
         }
     }
 
-    public void setTurnosIdComboBoxData(List<Turno> turnos) {
-        turno_id_cbx.removeAllItems();
+    public void updateFuncionariosComponentsData() {
+        List<Funcionario> funcionarios = EntityUtils.select("SELECT t FROM Funcionario t ORDER BY id ASC", Funcionario.class);
+        DefaultTableModel model = (DefaultTableModel) funcionarios_table.getModel();
+        model.setRowCount(0);
 
-        for (Turno turno : turnos) {
-            turno_id_cbx.addItem(turno.getId().toString());
-        }
-    }
-
-    public void setFuncionarioIdCbxData(List<Funcionario> funcionarios) {
         funcionario_id_cbx.removeAllItems();
 
         for (Funcionario funcionario : funcionarios) {
             funcionario_id_cbx.addItem(funcionario.getId().toString());
-        }
-    }
-
-    public void setFuncionarioTurnoCbxData(List<Turno> turnos) {
-        funcionario_turno_cbx.removeAllItems();
-
-        for (Turno turno : turnos) {
-            funcionario_turno_cbx.addItem(new ComboItem(turno.getNome(), turno.getId().toString()));
-        }
-    }
-
-    public void setFuncionariosTableData(List<Funcionario> funcionarios) {
-        DefaultTableModel model = (DefaultTableModel) funcionarios_table.getModel();
-        model.setRowCount(0);
-
-        for (Funcionario funcionario : funcionarios) {
             model.addRow(new Object[]{funcionario.getId(), funcionario.getNome(), funcionario.getRg(), funcionario.getTurno().getNome()});
         }
     }
