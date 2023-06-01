@@ -4,13 +4,18 @@
  */
 package views;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.mycompany.dejep.models.Funcionario;
 import com.mycompany.dejep.models.Turno;
 import com.mycompany.dejep.models.utils.ComboItem;
 import com.mycompany.dejep.models.utils.EntityUtils;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -66,6 +71,7 @@ public class Inicio extends javax.swing.JFrame {
         turnos_table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sorteio de Escalas para DEJEP");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Escalas"));
 
@@ -588,50 +594,32 @@ public class Inicio extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    Inicio inicio = new Inicio();
+
+                    inicio.updateTurnosComponentsData();
+                    inicio.updateFuncionariosComponentsData();
+
+                    inicio.setVisible(true);
                 }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            });
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Inicio inicio = new Inicio();
-
-                inicio.updateTurnosComponentsData();
-                inicio.updateFuncionariosComponentsData();
-
-                inicio.setVisible(true);
-            }
-        });
     }
 
     public void updateTurnosComponentsData() {
         funcionario_turno_cbx.removeAllItems();
-        
+
         turno_id_cbx.removeAllItems();
-        
+
         DefaultTableModel model = (DefaultTableModel) turnos_table.getModel();
         model.setRowCount(0);
-        
+
         List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
 
         for (Turno turno : turnos) {
