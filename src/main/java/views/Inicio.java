@@ -442,7 +442,7 @@ public class Inicio extends javax.swing.JFrame {
                 new String[]{"Sim", "Não"},
                 "Não");
 
-        if (res == JOptionPane.NO_OPTION) {
+        if (res != JOptionPane.YES_OPTION) {
             return;
         }
 
@@ -547,7 +547,34 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_edit_funcionarioActionPerformed
 
     private void btn_delete_funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_funcionarioActionPerformed
-        // TODO add your handling code here:
+        int btt = JOptionPane.showOptionDialog(null,
+                "Você tem certeza que deseja excluir o funcionário: '" + funcionario_nome_txt.getText() + "'?",
+                "Excluir Funcionário",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                new String[]{"Sim", "Não"},
+                "Não");
+        if (btt != JOptionPane.YES_OPTION) {
+            return;
+        }
+        int funcionario_id = Integer.parseInt(funcionario_id_cbx.getSelectedItem().toString());
+
+        Funcionario funcionario = EntityUtils.find(Funcionario.class, funcionario_id);
+
+        try {
+            EntityUtils.delete(funcionario);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, "Houve um erro ao tentar deletar o funcionário: " + funcionario.getNome(), "Erro!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Funcionário deletado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+        List<Funcionario> funcionarios = EntityUtils.select("SELECT t FROM Funcionario t ORDER BY id ASC", Funcionario.class);
+        this.setFuncionarioIdCbxData(funcionarios);
+        this.setFuncionariosTableData(funcionarios);
     }//GEN-LAST:event_btn_delete_funcionarioActionPerformed
 
     private void funcionario_id_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionario_id_cbxActionPerformed
