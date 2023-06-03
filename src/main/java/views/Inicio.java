@@ -58,6 +58,18 @@ public class Inicio extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         funcionarios_table = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        funcionario_id_cbx1 = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        funcionario_nome_txt1 = new javax.swing.JTextField();
+        btn_add_funcionario1 = new javax.swing.JButton();
+        btn_edit_funcionario1 = new javax.swing.JButton();
+        btn_delete_funcionario1 = new javax.swing.JButton();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btn_add_turno = new javax.swing.JButton();
@@ -83,7 +95,7 @@ public class Inicio extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 517, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Escalas", jPanel1);
@@ -109,6 +121,11 @@ public class Inicio extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        funcionario_rg_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                funcionario_rg_txtActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Turno:");
 
@@ -231,15 +248,142 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Férias"));
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        funcionario_id_cbx1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                funcionario_id_cbx1ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("ID:");
+
+        jLabel8.setText("Funcionário:");
+
+        funcionario_nome_txt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                funcionario_nome_txt1ActionPerformed(evt);
+            }
+        });
+
+        btn_add_funcionario1.setText("Adicionar");
+        btn_add_funcionario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_add_feriasActionPerformed(evt);
+            }
+        });
+
+        btn_edit_funcionario1.setText("Atualizar");
+        btn_edit_funcionario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit_feriasActionPerformed(evt);
+            }
+        });
+
+        btn_delete_funcionario1.setText("Deletar");
+        btn_delete_funcionario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_delete_feriasActionPerformed(evt);
+            }
+        });
+
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inicio_feriasActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Data início:");
+
+        try {
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField2inicio_feriasActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Data término:");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+                        .addComponent(btn_add_funcionario1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_edit_funcionario1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_delete_funcionario1))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(funcionario_id_cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(funcionario_nome_txt1)))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(funcionario_id_cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(funcionario_nome_txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_delete_funcionario1)
+                        .addComponent(btn_edit_funcionario1))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_add_funcionario1)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)
+                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 779, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 517, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(430, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Férias", jPanel3);
@@ -590,6 +734,38 @@ public class Inicio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_funcionario_id_cbxActionPerformed
 
+    private void funcionario_id_cbx1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionario_id_cbx1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_funcionario_id_cbx1ActionPerformed
+
+    private void funcionario_nome_txt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionario_nome_txt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_funcionario_nome_txt1ActionPerformed
+
+    private void btn_delete_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_feriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_delete_feriasActionPerformed
+
+    private void btn_edit_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_feriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_edit_feriasActionPerformed
+
+    private void btn_add_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_feriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_add_feriasActionPerformed
+
+    private void inicio_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inicio_feriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inicio_feriasActionPerformed
+
+    private void funcionario_rg_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionario_rg_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_funcionario_rg_txtActionPerformed
+
+    private void jFormattedTextField2inicio_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2inicio_feriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField2inicio_feriasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -644,28 +820,40 @@ public class Inicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add_funcionario;
+    private javax.swing.JButton btn_add_funcionario1;
     private javax.swing.JButton btn_add_turno;
     private javax.swing.JButton btn_delete_funcionario;
+    private javax.swing.JButton btn_delete_funcionario1;
     private javax.swing.JButton btn_delete_turno;
     private javax.swing.JButton btn_edit_funcionario;
+    private javax.swing.JButton btn_edit_funcionario1;
     private javax.swing.JButton btn_edit_turnos;
     private javax.swing.JComboBox<String> funcionario_id_cbx;
+    private javax.swing.JComboBox<String> funcionario_id_cbx1;
     private javax.swing.JTextField funcionario_nome_txt;
+    private javax.swing.JTextField funcionario_nome_txt1;
     private javax.swing.JFormattedTextField funcionario_rg_txt;
     private javax.swing.JComboBox<ComboItem> funcionario_turno_cbx;
     private javax.swing.JTable funcionarios_table;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
