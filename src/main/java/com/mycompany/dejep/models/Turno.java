@@ -21,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "turnos")
-public class Turno {
+public class Turno implements Comparable<Turno> {
 
     @Id
     @Column(name = "id")
@@ -68,6 +68,10 @@ public class Turno {
 
     public List<Funcionario> getFuncionarios() {
         return this.funcionarios;
+    }
+    
+    public int compareTo(Turno other) {
+        return this.nome.compareTo(other.getNome());
     }
 
     @Override

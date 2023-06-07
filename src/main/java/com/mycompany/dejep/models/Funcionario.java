@@ -23,68 +23,77 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "funcionarios")
-public class Funcionario {
-
+public class Funcionario implements Comparable<Funcionario> {
+    
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    
     @Column(name = "nome")
     private String nome;
-
+    
     @Column(name = "rg")
     private String rg;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "turno_id")
     private Turno turno;
-
+    
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private List<Ferias> ferias;
-
+    
     public Funcionario() {
     }
-
+    
     public Integer getId() {
         return id;
     }
-
+    
     public String getNome() {
         return nome;
     }
-
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
     public String getRg() {
         return rg;
     }
-
+    
     public void setRg(String rg) {
         this.rg = rg;
     }
-
+    
     public Turno getTurno() {
         return turno;
     }
-
+    
     public void setTurno(Turno turno) {
         this.turno = turno;
     }
-
+    
     public void adicionarFerias(Ferias ferias) {
         ferias.setFuncionario(this);
         this.ferias.add(ferias);
     }
-
+    
     public void removerFerias(Ferias ferias) {
         ferias.setFuncionario(null);
         this.ferias.remove(ferias);
     }
-
+    
     public List<Ferias> getFerias() {
         return this.ferias;
+    }
+    
+    public int compareTo(Funcionario other) {
+        return this.nome.compareTo(other.getNome());
+    }
+    
+    @Override
+    public String toString() {
+        return this.nome;
     }
 }

@@ -5,11 +5,17 @@
 package views;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.mycompany.dejep.models.Ferias;
 import com.mycompany.dejep.models.Funcionario;
 import com.mycompany.dejep.models.Turno;
 import com.mycompany.dejep.models.utils.ComboItem;
 import com.mycompany.dejep.models.utils.EntityUtils;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,17 +65,19 @@ public class Inicio extends javax.swing.JFrame {
         funcionarios_table = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        funcionario_id_cbx1 = new javax.swing.JComboBox<>();
+        ferias_funcionarios_cbx = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        btn_add_funcionario1 = new javax.swing.JButton();
-        btn_edit_funcionario1 = new javax.swing.JButton();
-        btn_delete_funcionario1 = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        btn_add_ferias = new javax.swing.JButton();
+        btn_edit_ferias = new javax.swing.JButton();
+        btn_delete_ferias = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
-        funcionario_id_cbx2 = new javax.swing.JComboBox<>();
+        ferias_id_cbx = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
+        datepicker_inicio = new com.github.lgooddatepicker.components.DatePicker();
+        datepicker_termino = new com.github.lgooddatepicker.components.DatePicker();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ferias_table = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btn_add_turno = new javax.swing.JButton();
@@ -121,11 +129,6 @@ public class Inicio extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        funcionario_rg_txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                funcionario_rg_txtActionPerformed(evt);
-            }
-        });
 
         jLabel6.setText("Turno:");
 
@@ -250,70 +253,40 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        funcionario_id_cbx1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ferias_id_cbxActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("ID:");
 
-        btn_add_funcionario1.setText("Adicionar");
-        btn_add_funcionario1.addActionListener(new java.awt.event.ActionListener() {
+        btn_add_ferias.setText("Adicionar");
+        btn_add_ferias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_add_feriasActionPerformed(evt);
             }
         });
 
-        btn_edit_funcionario1.setText("Atualizar");
-        btn_edit_funcionario1.addActionListener(new java.awt.event.ActionListener() {
+        btn_edit_ferias.setText("Atualizar");
+        btn_edit_ferias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_edit_feriasActionPerformed(evt);
             }
         });
 
-        btn_delete_funcionario1.setText("Deletar");
-        btn_delete_funcionario1.addActionListener(new java.awt.event.ActionListener() {
+        btn_delete_ferias.setText("Deletar");
+        btn_delete_ferias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_delete_feriasActionPerformed(evt);
             }
         });
 
-        try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel9.setText("Início:");
+
+        jLabel10.setText("Término:");
+
+        ferias_id_cbx.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inicio_feriasActionPerformed(evt);
+                ferias_id_cbxferias_id_cbxActionPerformed(evt);
             }
         });
 
-        jLabel9.setText("Data início:");
-
-        try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField2inicio_feriasActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setText("Data término:");
-
-        funcionario_id_cbx2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                funcionario_id_cbx2ferias_id_cbxActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("Funcionário ID:");
+        jLabel8.setText("Funcionário:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -321,54 +294,68 @@ public class Inicio extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(funcionario_id_cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_add_funcionario1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_edit_funcionario1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_delete_funcionario1))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(funcionario_id_cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(datepicker_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 97, Short.MAX_VALUE)))
+                        .addComponent(datepicker_termino, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_add_ferias)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_edit_ferias)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_delete_ferias))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ferias_id_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ferias_funcionarios_cbx, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(funcionario_id_cbx1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(funcionario_id_cbx2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_delete_funcionario1)
-                        .addComponent(btn_edit_funcionario1))
-                    .addComponent(btn_add_funcionario1))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_delete_ferias)
+                            .addComponent(btn_edit_ferias))
+                        .addComponent(btn_add_ferias))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ferias_funcionarios_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(ferias_id_cbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(datepicker_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(datepicker_termino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        ferias_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Funcionário", "Início", "Término"
+            }
+        ));
+        jScrollPane3.setViewportView(ferias_table);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -376,7 +363,9 @@ public class Inicio extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -384,7 +373,9 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(430, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Férias", jPanel3);
@@ -626,8 +617,8 @@ public class Inicio extends javax.swing.JFrame {
         funcionario.setNome(funcionario_nome_txt.getText());
         funcionario.setRg(funcionario_rg_txt.getValue().toString());
 
-        Object item = funcionario_turno_cbx.getSelectedItem();
-        Integer turno_id = Integer.parseInt(((ComboItem) item).getValue());
+        Turno item = (Turno) funcionario_turno_cbx.getSelectedItem();
+        Integer turno_id = item.getId();
         Turno turno = EntityUtils.find(Turno.class, turno_id);
         funcionario.setTurno(turno);
 
@@ -660,8 +651,8 @@ public class Inicio extends javax.swing.JFrame {
 
         String novo_nome = funcionario_nome_txt.getText();
         String novo_rg = funcionario_rg_txt.getText();
-        Object item = funcionario_turno_cbx.getSelectedItem();
-        Integer turno_id = Integer.parseInt(((ComboItem) item).getValue());
+        Turno item = (Turno) funcionario_turno_cbx.getSelectedItem();
+        Integer turno_id = item.getId();
 
         int funcionario_id = Integer.parseInt(funcionario_id_cbx.getSelectedItem().toString());
         Funcionario funcionario = EntityUtils.find(Funcionario.class, funcionario_id);
@@ -728,16 +719,12 @@ public class Inicio extends javax.swing.JFrame {
 
             funcionario_nome_txt.setText(funcionario.getNome());
             funcionario_rg_txt.setValue(funcionario.getRg());
-            funcionario_turno_cbx.getModel().setSelectedItem(new ComboItem(funcionario.getTurno().getNome(), funcionario.getTurno().getId().toString()));
+            funcionario_turno_cbx.getModel().setSelectedItem(funcionario.getTurno());
         } catch (Exception e) {
             funcionario_nome_txt.setText("");
             funcionario_rg_txt.setValue("");
         }
     }//GEN-LAST:event_funcionario_id_cbxActionPerformed
-
-    private void ferias_id_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ferias_id_cbxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ferias_id_cbxActionPerformed
 
     private void btn_delete_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_feriasActionPerformed
         // TODO add your handling code here:
@@ -748,24 +735,55 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_edit_feriasActionPerformed
 
     private void btn_add_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_feriasActionPerformed
-        // TODO add your handling code here:
+        String data_inicio = datepicker_inicio.getDateStringOrEmptyString();
+        String data_termino = datepicker_termino.getDateStringOrEmptyString();
+
+        if (data_inicio.isBlank()) {
+            JOptionPane.showMessageDialog(this, "O campo \"Data início\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (data_termino.isBlank()) {
+            JOptionPane.showMessageDialog(this, "O campo \"Data término\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Funcionario funcionario = (Funcionario) ferias_funcionarios_cbx.getSelectedItem();
+
+        Ferias ferias = new Ferias();
+        ferias.setFuncionario(funcionario);
+        ferias.setData_inicio(data_inicio);
+        ferias.setData_termino(data_termino);
+
+        try {
+            System.out.println();
+            EntityUtils.insert(ferias);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Houve um erro ao cadastrar as férias. Tente novamente mais tarde.", "Erro!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Férias cadastrada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+        this.updateFeriasComponentsData();
     }//GEN-LAST:event_btn_add_feriasActionPerformed
 
-    private void inicio_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inicio_feriasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inicio_feriasActionPerformed
+    private void ferias_id_cbxferias_id_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ferias_id_cbxferias_id_cbxActionPerformed
+        try {
+            int ferias_id = Integer.parseInt(ferias_id_cbx.getSelectedItem().toString());
 
-    private void funcionario_rg_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionario_rg_txtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_funcionario_rg_txtActionPerformed
+            Ferias ferias = EntityUtils.find(Ferias.class, ferias_id);
 
-    private void jFormattedTextField2inicio_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2inicio_feriasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField2inicio_feriasActionPerformed
+            LocalDate data_inicio = LocalDate.parse(ferias.getData_inicio());
+            LocalDate data_termino = LocalDate.parse(ferias.getData_termino());
 
-    private void funcionario_id_cbx2ferias_id_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionario_id_cbx2ferias_id_cbxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_funcionario_id_cbx2ferias_id_cbxActionPerformed
+            ferias_funcionarios_cbx.getModel().setSelectedItem(ferias.getFuncionario());
+            datepicker_inicio.setDate(data_inicio);
+            datepicker_termino.setDate(data_termino);
+        } catch (Exception e) {
+            System.out.println("");
+        }
+    }//GEN-LAST:event_ferias_id_cbxferias_id_cbxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -780,6 +798,7 @@ public class Inicio extends javax.swing.JFrame {
 
                     inicio.updateTurnosComponentsData();
                     inicio.updateFuncionariosComponentsData();
+                    inicio.updateFeriasComponentsData();
 
                     inicio.setVisible(true);
                 }
@@ -800,9 +819,14 @@ public class Inicio extends javax.swing.JFrame {
         List<Turno> turnos = EntityUtils.select("SELECT t FROM Turno t ORDER BY id DESC", Turno.class);
 
         for (Turno turno : turnos) {
-            funcionario_turno_cbx.addItem(new ComboItem(turno.getNome(), turno.getId().toString()));
             turno_id_cbx.addItem(turno.getId().toString());
             model.addRow(new Object[]{turno.getId(), turno.getNome()});
+        }
+
+        Collections.sort(turnos);
+
+        for (Turno turno : turnos) {
+            funcionario_turno_cbx.addItem(turno);
         }
     }
 
@@ -817,27 +841,60 @@ public class Inicio extends javax.swing.JFrame {
             funcionario_id_cbx.addItem(funcionario.getId().toString());
             model.addRow(new Object[]{funcionario.getId(), funcionario.getNome(), funcionario.getRg(), funcionario.getTurno().getNome()});
         }
+
+        Collections.sort(funcionarios);
+        for (Funcionario funcionario : funcionarios) {
+            ferias_funcionarios_cbx.addItem(funcionario);
+        }
+    }
+
+    public void updateFeriasComponentsData() {
+        List<Ferias> ferias = EntityUtils.select("SELECT f FROM Ferias f ORDER BY id DESC", Ferias.class);
+        DefaultTableModel model = (DefaultTableModel) ferias_table.getModel();
+        model.setRowCount(0);
+
+        ferias_id_cbx.removeAllItems();
+
+        SimpleDateFormat formatoSql = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatoSaida = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            for (Ferias item : ferias) {
+                ferias_id_cbx.addItem(item.getId().toString());
+
+                Date data = formatoSql.parse(item.getData_inicio());
+                String data_inicio = formatoSaida.format(data);
+
+                data = formatoSql.parse(item.getData_termino());
+                String data_termino = formatoSaida.format(data);
+
+                model.addRow(new Object[]{item.getId(), item.getFuncionario().getNome(), data_inicio, data_termino});
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_add_ferias;
     private javax.swing.JButton btn_add_funcionario;
-    private javax.swing.JButton btn_add_funcionario1;
     private javax.swing.JButton btn_add_turno;
+    private javax.swing.JButton btn_delete_ferias;
     private javax.swing.JButton btn_delete_funcionario;
-    private javax.swing.JButton btn_delete_funcionario1;
     private javax.swing.JButton btn_delete_turno;
+    private javax.swing.JButton btn_edit_ferias;
     private javax.swing.JButton btn_edit_funcionario;
-    private javax.swing.JButton btn_edit_funcionario1;
     private javax.swing.JButton btn_edit_turnos;
+    private com.github.lgooddatepicker.components.DatePicker datepicker_inicio;
+    private com.github.lgooddatepicker.components.DatePicker datepicker_termino;
+    private javax.swing.JComboBox<Funcionario> ferias_funcionarios_cbx;
+    private javax.swing.JComboBox<String> ferias_id_cbx;
+    private javax.swing.JTable ferias_table;
     private javax.swing.JComboBox<String> funcionario_id_cbx;
-    private javax.swing.JComboBox<String> funcionario_id_cbx1;
-    private javax.swing.JComboBox<String> funcionario_id_cbx2;
     private javax.swing.JTextField funcionario_nome_txt;
     private javax.swing.JFormattedTextField funcionario_rg_txt;
-    private javax.swing.JComboBox<ComboItem> funcionario_turno_cbx;
+    private javax.swing.JComboBox<Turno> funcionario_turno_cbx;
     private javax.swing.JTable funcionarios_table;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -857,6 +914,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox<String> turno_id_cbx;
     private javax.swing.JTextField turno_nome_txt;
