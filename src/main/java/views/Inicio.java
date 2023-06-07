@@ -731,7 +731,38 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_delete_feriasActionPerformed
 
     private void btn_edit_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_feriasActionPerformed
-        // TODO add your handling code here:
+        String data_inicio = datepicker_inicio.getDateStringOrEmptyString();
+        String data_termino = datepicker_termino.getDateStringOrEmptyString();
+
+        if (data_inicio.isBlank()) {
+            JOptionPane.showMessageDialog(this, "O campo \"Data início\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (data_termino.isBlank()) {
+            JOptionPane.showMessageDialog(this, "O campo \"Data término\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Funcionario funcionario = (Funcionario) ferias_funcionarios_cbx.getSelectedItem();
+
+        Integer ferias_id = Integer.parseInt(ferias_id_cbx.getSelectedItem().toString());
+
+        Ferias ferias = EntityUtils.find(Ferias.class, ferias_id);
+        ferias.setData_inicio(data_inicio);
+        ferias.setData_termino(data_termino);
+        ferias.setFuncionario(funcionario);
+
+        try {
+            EntityUtils.update(ferias);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Houve um erro ao tentar editar o a férias de ID: " + ferias.getId(), "Erro!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Férias atualizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+        this.updateFeriasComponentsData();
     }//GEN-LAST:event_btn_edit_feriasActionPerformed
 
     private void btn_add_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_feriasActionPerformed
