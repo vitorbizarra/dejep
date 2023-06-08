@@ -724,7 +724,34 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_funcionario_id_cbxActionPerformed
 
     private void btn_delete_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_feriasActionPerformed
-        // TODO add your handling code here:
+        int btt = JOptionPane.showOptionDialog(null,
+                "Você tem certeza que deseja a férias de ID: '" + ferias_id_cbx.getSelectedItem().toString() + "'?",
+                "Excluir Férias",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                new String[]{"Sim", "Não"},
+                "Não");
+
+        if (btt != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        int ferias_id = Integer.parseInt(ferias_id_cbx.getSelectedItem().toString());
+
+        Ferias ferias = EntityUtils.find(Ferias.class, ferias_id);
+
+        try {
+            EntityUtils.delete(ferias);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, "Houve um erro ao tentar deletar a férias de ID: '" + ferias.getId() + "'", "Erro!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Férias deletada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+
+        this.updateFeriasComponentsData();
     }//GEN-LAST:event_btn_delete_feriasActionPerformed
 
     private void btn_edit_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_feriasActionPerformed
