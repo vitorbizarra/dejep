@@ -8,7 +8,6 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.mycompany.dejep.models.Ferias;
 import com.mycompany.dejep.models.Funcionario;
 import com.mycompany.dejep.models.Turno;
-import com.mycompany.dejep.models.utils.ComboItem;
 import com.mycompany.dejep.models.utils.EntityUtils;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
@@ -731,18 +730,15 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_delete_feriasActionPerformed
 
     private void btn_edit_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_feriasActionPerformed
+        try {
+            this.validateFeriasForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Ops!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         String data_inicio = datepicker_inicio.getDateStringOrEmptyString();
         String data_termino = datepicker_termino.getDateStringOrEmptyString();
-
-        if (data_inicio.isBlank()) {
-            JOptionPane.showMessageDialog(this, "O campo \"Data início\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (data_termino.isBlank()) {
-            JOptionPane.showMessageDialog(this, "O campo \"Data término\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
 
         Funcionario funcionario = (Funcionario) ferias_funcionarios_cbx.getSelectedItem();
 
@@ -766,18 +762,15 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_edit_feriasActionPerformed
 
     private void btn_add_feriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_feriasActionPerformed
+        try {
+            this.validateFeriasForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Ops!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         String data_inicio = datepicker_inicio.getDateStringOrEmptyString();
         String data_termino = datepicker_termino.getDateStringOrEmptyString();
-
-        if (data_inicio.isBlank()) {
-            JOptionPane.showMessageDialog(this, "O campo \"Data início\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (data_termino.isBlank()) {
-            JOptionPane.showMessageDialog(this, "O campo \"Data término\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
 
         Funcionario funcionario = (Funcionario) ferias_funcionarios_cbx.getSelectedItem();
 
@@ -903,6 +896,28 @@ public class Inicio extends javax.swing.JFrame {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void validateFeriasForm() throws Exception {
+        if (datepicker_inicio.getDateStringOrEmptyString().isBlank()) {
+            throw new Exception("O campo \"Data início\" está vazio.");
+        }
+
+        if (datepicker_termino.getDateStringOrEmptyString().isBlank()) {
+            throw new Exception("O campo \"Data término\" está vazio.");
+        }
+
+        try {
+            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+            Date data_inicio = sdformat.parse(datepicker_inicio.getDateStringOrEmptyString());
+            Date data_termino = sdformat.parse(datepicker_termino.getDateStringOrEmptyString());
+
+            if (data_inicio.compareTo(data_termino) < 0) {
+                throw new Exception("Período de férias inválido.");
+            }
+        } catch (Exception e) {
+            throw e;
         }
     }
 
