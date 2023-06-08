@@ -927,7 +927,7 @@ public class Inicio extends javax.swing.JFrame {
             Date data_inicio = sdformat.parse(datepicker_inicio.getDateStringOrEmptyString());
             Date data_termino = sdformat.parse(datepicker_termino.getDateStringOrEmptyString());
 
-            if (data_inicio.compareTo(data_termino) < 0) {
+            if (data_inicio.compareTo(data_termino) >= 0) {
                 throw new Exception("Período de férias inválido.");
             }
         } catch (Exception e) {
