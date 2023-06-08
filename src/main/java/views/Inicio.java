@@ -602,13 +602,10 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_delete_turnoActionPerformed
 
     private void btn_add_funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_funcionarioActionPerformed
-        if (funcionario_nome_txt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O campo \"Nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (funcionario_rg_txt.getValue() == null) {
-            JOptionPane.showMessageDialog(this, "O campo \"RG\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        try {
+            this.validateFuncionariosForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção!", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -638,13 +635,10 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_add_funcionarioActionPerformed
 
     private void btn_edit_funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_funcionarioActionPerformed
-        if (funcionario_nome_txt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O campo \"Nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (funcionario_rg_txt.getValue() == null) {
-            JOptionPane.showMessageDialog(this, "O campo \"RG\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        try {
+            this.validateFuncionariosForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção!", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -896,6 +890,16 @@ public class Inicio extends javax.swing.JFrame {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void validateFuncionariosForm() throws Exception {
+        if (funcionario_nome_txt.getText().isEmpty()) {
+            throw new Exception("O campo \"Nome\" está vazio.");
+        }
+
+        if (funcionario_rg_txt.getValue() == null) {
+            throw new Exception("O campo \"RG\" está vazio.");
         }
     }
 
