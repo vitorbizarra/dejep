@@ -509,8 +509,10 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_add_turnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_turnoActionPerformed
-        if (turno_nome_txt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O campo \"nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        try {
+            this.validateTurnosForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção!", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -529,8 +531,10 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_add_turnoActionPerformed
 
     private void btn_edit_turnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_turnosActionPerformed
-        if (turno_nome_txt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O campo \"nome\" está vazio.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        try {
+            this.validateTurnosForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção!", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -890,6 +894,12 @@ public class Inicio extends javax.swing.JFrame {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void validateTurnosForm() throws Exception {
+        if (turno_nome_txt.getText().isEmpty()) {
+            throw new Exception("O campo \"Nome\" está vazio.");
         }
     }
 
