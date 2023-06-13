@@ -53,6 +53,10 @@ public class Inicio extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        calendarPanel1 = new com.github.lgooddatepicker.components.CalendarPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         funcionario_id_cbx = new javax.swing.JComboBox<>();
@@ -103,15 +107,55 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Escalas"));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Funcionário", "Turno", "Data"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(jTable1);
+
+        jButton1.setText("Sortear Escala");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 779, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(calendarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(calendarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Escalas", jPanel1);
@@ -242,6 +286,7 @@ public class Inicio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        funcionarios_table.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(funcionarios_table);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -383,6 +428,7 @@ public class Inicio extends javax.swing.JFrame {
                 "ID", "Funcionário", "Início", "Término"
             }
         ));
+        ferias_table.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(ferias_table);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -505,6 +551,7 @@ public class Inicio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        turnos_table.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(turnos_table);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -1017,7 +1064,7 @@ public class Inicio extends javax.swing.JFrame {
         try {
             PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
             set.add(OrientationRequested.PORTRAIT);
-           set.add(new JobName(header_message, this.getLocale())) ;
+            set.add(new JobName(header_message, this.getLocale()));
             if (table.print(JTable.PrintMode.FIT_WIDTH, header, footer, true, set, true)) {
                 JOptionPane.showMessageDialog(this, "Exportado com sucesso!", "Exportar", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -1039,6 +1086,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton btn_imprimir_ferias;
     private javax.swing.JButton btn_imprimir_funcionarios;
     private javax.swing.JButton btn_imprimir_turnos;
+    private com.github.lgooddatepicker.components.CalendarPanel calendarPanel1;
     private com.github.lgooddatepicker.components.DatePicker datepicker_inicio;
     private com.github.lgooddatepicker.components.DatePicker datepicker_termino;
     private javax.swing.JComboBox<Funcionario> ferias_funcionarios_cbx;
@@ -1049,6 +1097,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField funcionario_rg_txt;
     private javax.swing.JComboBox<Turno> funcionario_turno_cbx;
     private javax.swing.JTable funcionarios_table;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -1069,7 +1118,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> turno_id_cbx;
     private javax.swing.JTextField turno_nome_txt;
     private javax.swing.JTable turnos_table;
