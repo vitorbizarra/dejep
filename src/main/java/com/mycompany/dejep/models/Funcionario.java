@@ -83,6 +83,11 @@ public class Funcionario {
         ferias.setFuncionario(null);
         this.ferias.remove(ferias);
     }
+    
+    @Override
+    public String toString(){
+        return nome;
+    }
 
     public List<Ferias> getFerias() {
         return this.ferias;

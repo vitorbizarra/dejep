@@ -13,7 +13,7 @@ public class ComboItem {
     private String key;
     private String value;
 
-    public ComboItem(String key, String value) {
+    public ComboItem(String key) {
         this.key = key;
         this.value = value;
     }
