@@ -987,6 +987,7 @@ public class Inicio extends javax.swing.JFrame {
             model.addRow(new Object[]{funcionario.getId(), funcionario.getNome(), funcionario.getRg(), funcionario.getTurno().getNome()});
         }
 
+        ferias_funcionarios_cbx.removeAllItems();
         Collections.sort(funcionarios);
         for (Funcionario funcionario : funcionarios) {
             ferias_funcionarios_cbx.addItem(funcionario);
